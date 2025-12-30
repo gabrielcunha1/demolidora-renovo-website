@@ -37,8 +37,9 @@ https://demolidorarenovo.com.br
 
 The project features a clean and professional design focused on clarity, structure, and usability, tailored for an institutional business website.
 
-🔗 **Screenshots:**  
-https://imgur.com/a/ewZE4Am
+![Renovo Demolidora – Hero Section](https://i.imgur.com/QLCHAwL.jpeg)
+![Renovo Demolidora – Services Section](https://i.imgur.com/Bu8fC0i.png)
+
 
 ---
 
