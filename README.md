@@ -35,9 +35,10 @@ https://demolidorarenovo.com.br
 
 ## 📸 Preview
 
-https://imgur.com/QLCHAwL
+The project features a clean and professional design focused on clarity, structure, and usability, tailored for an institutional business website.
 
-https://imgur.com/Bu8fC0i
+🔗 **Screenshots:**  
+https://imgur.com/a/ewZE4Am
 
 ---
 
