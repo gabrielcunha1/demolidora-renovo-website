@@ -35,9 +35,9 @@ https://demolidorarenovo.com.br
 
 ## 📸 Preview
 
-https://i.imgur.com/QLCHAwL.jpeg
+https://imgur.com/QLCHAwL
 
-https://i.imgur.com/Bu8fC0i.png
+https://imgur.com/Bu8fC0i
 
 ---
 
