@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Demolidora Renovo | Demolir Para Renovar</title>
+  <link rel="icon" href="Demolidora Renovo.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@600;800&display=swap" rel="stylesheet" />
+
+  <script>
+    if (window.location.pathname.endsWith('index.html')) {
+      window.location.href = '/';
+    }
+  </script>
+
+  <style>
+    :root {
+      --amarelo: #ffcc00;
+      --preto: #000;
+      --cinza: #ccc;
+      --fundo-card: #1a1a1a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--preto);
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    nav {
+      background: #0e0e0e;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    }
+
+    nav img {
+      max-height: 35px;
+      position: static;
+    }
+
+    .nav-center {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background: #0e0e0e;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      padding: 0;
+      z-index: 999;
+      display: flex;
+    }
+
+    .nav-center.active {
+      max-height: 500px; /* suficiente para mostrar todos os links */
+      padding: 15px 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+    }
+
+    .nav-center a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.2rem;
+      padding: 10px 20px;
+      width: 100%;
+      text-align: center;
+      font-weight: 600;
+      user-select: none;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-center a:hover,
+    .nav-center a.active {
+      background-color: var(--amarelo);
+      color: #000;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: flex;
+      position: absolute;
+      right: 20px;
+      width: 30px;
+      height: 22px;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      z-index: 1200;
+    }
+    .hamburger span {
+      display: block;
+      height: 4px;
+      background: #fff;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* Hamburger animado ao abrir */
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(10px) rotate(45deg);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-10px) rotate(-45deg);
+    }
+
+    /* Header */
+    header {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+      margin-top: 60px; /* para não ficar embaixo do nav fixo */
+    }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      transition: transform 1s ease;
+      z-index: 0;
+    }
+
+    .slide {
+      min-width: 100%;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      filter: brightness(0.5);
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 10;
+      max-width: 90vw;
+      padding: 0 15px;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo-grande {
+      max-width: 190px;
+      margin-bottom: 20px;
+    }
+
+    .header-content h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+      color: #fff;
+      text-shadow: 2px 2px 8px #000;
+    }
+
+    .amarelo {
+      color: var(--amarelo);
+    }
+
+    .header-content p {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+    }
+
+    .orcamento-btn-header {
+      background: var(--amarelo);
+      color: #000;
+      font-weight: 700;
+      border-radius: 30px;
+      padding: 12px 28px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: 0.3s;
+      box-shadow: 0 0 12px rgba(255, 204, 0, 0.4);
+      user-select: none;
+    }
+
+    .orcamento-btn-header:hover {
+      background: #e6b800;
+      transform: scale(1.05);
+    }
+
+    section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 70px 20px;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeUp 1.5s forwards;
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    section h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.2rem;
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+
+    #quem-somos h2 {
+      color: var(--amarelo);
+    }
+
+    #quem-somos p {
+      font-size: 1.15rem;
+      color: var(--cinza);
+      text-align: center;
+      max-width: 850px;
+      margin: 0 auto;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+
+    #nossos-servicos {
+      background: var(--amarelo);
+      color: #000;
+      text-align: center;
+      animation-delay: 0.5s;
+    }
+
+    #nossos-servicos h2 {
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .ver-servicos-btn {
+      background-color: #000;
+      color: var(--amarelo);
+      padding: 16px 32px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      text-decoration: none;
+      margin-top: 35px;
+      display: inline-block;
+      transition: 0.3s;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      user-select: none;
+    }
+
+    .ver-servicos-btn:hover {
+      background: #222;
+      transform: scale(1.05);
+    }
+
+    #porque-escolher h2 {
+      text-transform: uppercase;
+    }
+
+    .benefits-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .benefit {
+      background: var(--fundo-card);
+      border-radius: 15px;
+      padding: 25px;
+      width: 280px;
+      transition: 0.3s;
+      box-shadow: 0 0 12px rgba(255, 204, 0, 0.1);
+      user-select: none;
+    }
+
+    .benefit:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 25px rgba(255, 204, 0, 0.3);
+    }
+
+    .benefit .circle {
+      width: 42px;
+      height: 42px;
+      background: var(--amarelo);
+      color: #000;
+      border-radius: 50%;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      font-size: 1.1rem;
+      user-select: none;
+    }
+
+    .benefit h3 {
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+    }
+
+    .benefit p {
+      color: var(--cinza);
+      font-size: 1rem;
+    }
+
+    #contato {
+      text-align: center;
+      background: #111;
+      border-top: 4px solid var(--amarelo);
+      border-bottom: 4px solid var(--amarelo);
+      padding-bottom: 50px;
+      padding-top: 50px;
+      /* Removi animação para ficar estático */
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    #contato h2 {
+      color: var(--amarelo);
+    }
+
+    #contato p {
+      margin: 10px 0;
+      font-size: 1.1rem;
+    }
+
+    #contato a {
+      color: var(--amarelo);
+      text-decoration: none;
+    }
+
+    .atendimento-brasil {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: var(--amarelo);
+      user-select: none;
+    }
+
+    .atendimento-brasil img {
+      width: 26px;
+    }
+
+    /* Botões sociais no contato - sem filtro invert, sem animação, ícones normais */
+    .social-links {
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      gap: 35px;
+    }
+
+    .social-links a img {
+      width: 45px;
+      height: 45px;
+      cursor: pointer;
+      user-select: none;
+      filter: none; /* remove filtro invertido */
+      transition: none; /* sem animação */
+    }
+
+    .social-links a:hover img {
+      filter: none; /* mantém o mesmo ícone no hover */
+    }
+
+    /* Botão flutuante WhatsApp - simples, só círculo verde com logo centralizada */
+    .floating-whatsapp {
+      position: fixed;
+      bottom: 25px;
+      right: 15px;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background: #25d366;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1100;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: none; /* remove sombra */
+      transition: none; /* remove transição */
+    }
+    .floating-whatsapp img {
+      width: 30px;
+      height: 30px;
+      filter: none; /* sem filtro */
+    }
+
+    /* Responsividade */
+    @media (min-width: 769px) {
+      .nav-center {
+        position: static;
+        max-height: none !important;
+        flex-direction: row;
+        background: transparent;
+        padding: 0;
+        gap: 24px;
+        display: flex !important;
+        height: auto !important;
+        justify-content: center;
+        width: auto;
+      }
+
+      .nav-center a {
+        width: auto;
+        font-size: 0.95rem;
+        padding: 6px 12px;
+        border-radius: 6px;
+        text-align: center;
+      }
+
+      .hamburger {
+        display: none;
+      }
+
+      nav img {
+        max-height: 45px;
+      }
+
+      header {
+        margin-top: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <img src="Demolidora Renovo.png" alt="Logo Demolidora Renovo" />
+    <div class="nav-center" id="nav-links">
+      <a href="#header" class="nav-link">Início</a>
+      <a href="#quem-somos" class="nav-link">Quem Somos</a>
+      <a href="#porque-escolher" class="nav-link">Por que nos Escolher?</a>
+      <a href="#contato" class="nav-link">Contato</a>
+      <a href="servicos.html#servicos" class="nav-link">Serviços</a>
+    </div>
+
+    <div class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" role="button" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+
+  <header id="header">
+    <div class="slider" id="slider">
+      <div class="slide" style="background-image: url('pegada-de-pega-de-grua.jpg');"></div>
+      <div class="slide" style="background-image: url('imagem2.jpg');"></div>
+      <div class="slide" style="background-image: url('imagem3.jpg');"></div>
+    </div>
+    <div class="header-content">
+      <img src="Demolidora Renovo.png" alt="Logo Demolidora Renovo" class="logo-grande" />
+      <h1><span class="amarelo">DEMOLIDORA</span> RENOVO</h1>
+      <p>Demolir para Renovar!</p>
+      <a href="https://api.whatsapp.com/send?phone=5511975533305" target="_blank" class="orcamento-btn-header">Solicitar Orçamento</a>
+    </div>
+  </header>
+
+  <section id="quem-somos">
+    <h2>QUEM SOMOS?</h2>
+    <p>
+      Na Demolidora Renovo, acreditamos que todo recomeço começa com uma transformação. Somos especialistas em demolições que abrem espaço para novas ideias, novos projetos e novos ciclos.
+      Com uma equipe treinada, equipamentos modernos e total compromisso com a segurança e o meio ambiente, atuamos em obras de pequeno, médio e grande porte, sempre com responsabilidade e agilidade.
+      Nosso trabalho vai além da remoção de estruturas: entregamos confiança, clareza no processo e soluções eficientes para quem precisa recomeçar do jeito certo.
+    </p>
+  </section>
+
+  <section id="nossos-servicos">
+    <h2>NOSSOS SERVIÇOS</h2>
+    <a href="servicos.html#servicos" class="ver-servicos-btn">Clique para ver nossos serviços</a>
+  </section>
+
+  <section id="porque-escolher">
+    <h2>POR QUE NOS ESCOLHER?</h2>
+    <div class="benefits-grid">
+      <div class="benefit"><div class="circle">1</div><h3>Segurança</h3><p>Protocolos rigorosos e supervisão constante.</p></div>
+      <div class="benefit"><div class="circle">2</div><h3>Documentação em Dia</h3><p>100% regularizados com normas e licenças atualizadas.</p></div>
+      <div class="benefit"><div class="circle">3</div><h3>EPI Conferido</h3><p>Todos os dias garantimos equipamentos verificados.</p></div>
+      <div class="benefit"><div class="circle">4</div><h3>Colaboradores Treinados</h3><p>Profissionais capacitados e especializados.</p></div>
+      <div class="benefit"><div class="circle">5</div><h3>Responsabilidade Ambiental</h3><p>Práticas sustentáveis e descarte consciente.</p></div>
+    </div>
+  </section>
+
+  <section id="contato">
+    <h2>Entre em Contato</h2>
+    <p><strong>Endereço:</strong> Achiles Beline 386, Osasco - SP</p>
+    <p><strong>WhatsApp:</strong> <a href="https://api.whatsapp.com/send?phone=5511975533305" target="_blank">(11) 97553-3305</a></p>
+    <p><strong>E-mail:</strong> <a href="mailto:demolidorarenovo@gmail.com">demolidorarenovo@gmail.com</a></p>
+    <p><strong>Horário:</strong> Segunda a Sexta - 08:00 às 17:00</p>
+
+    <div class="social-links">
+      <a href="https://www.instagram.com/demolidorarenovo/" target="_blank" aria-label="Instagram">
+        <img src="instagram.png" alt="Instagram" />
+      </a>
+      <a href="mailto:demolidorarenovo@gmail.com" aria-label="E-mail">
+        <img src="email.png" alt="E-mail" />
+      </a>
+      <a href="https://www.youtube.com/@DemolidoraRenovo" target="_blank" aria-label="YouTube">
+        <img src="youtube.png" alt="YouTube" />
+      </a>
+    </div>
+
+    <div class="atendimento-brasil">
+      <img src="brasil.png" alt="Bandeira do Brasil" />
+      <span>Atendimento para todo o Brasil</span>
+    </div>
+  </section>
+
+  <a href="https://api.whatsapp.com/send?phone=5511975533305" target="_blank" class="floating-whatsapp" aria-label="WhatsApp">
+    <img src="whatsapp.png" alt="WhatsApp" />
+  </a>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('active');
+
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+      hamburger.setAttribute('aria-expanded', !expanded);
+    });
+
+    document.querySelectorAll('.nav-center a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', false);
+      });
+    });
+
+    const slider = document.getElementById('slider');
+    let index = 0;
+    const slidesCount = slider.children.length;
+
+    setInterval(() => {
+      index = (index + 1) % slidesCount;
+      slider.style.transform = `translateX(-${index * 100}%)`;
+    }, 7000);
+  </script>
+</body>
+</html>

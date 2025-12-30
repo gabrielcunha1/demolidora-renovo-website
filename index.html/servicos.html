@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Serviços | Demolidora Renovo</title>
+  <link rel="icon" href="Demolidora Renovo.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Open+Sans&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: linear-gradient(to top, #222222, #ffcc00);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 60px; /* espaço para rodapé fixo */
+    }
+
+    nav {
+      background: #0e0e0e;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center; /* centraliza os links */
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    }
+
+    nav img {
+      max-height: 40px;
+      position: absolute;
+      left: 20px;
+    }
+
+    /* Menu links container */
+    .nav-center {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      transition: max-height 0.3s ease;
+    }
+
+    .nav-center a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: 0.3s;
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+      font-weight: 600;
+    }
+    .nav-center a:hover,
+    .nav-center a.active {
+      background-color: #ffcc00;
+      color: #000000;
+      font-weight: 700;
+    }
+
+    /* Hamburger button */
+    .hamburger {
+      display: none;
+      position: absolute;
+      right: 20px;
+      width: 30px;
+      height: 24px;
+      cursor: pointer;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 1100;
+    }
+    .hamburger span {
+      display: block;
+      height: 4px;
+      background: #fff;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* Header placeholder for fixed nav */
+    header {
+      height: 60px;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    /* Slider no header */
+    .slider {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      transition: transform 1s ease;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .slide {
+      min-width: 100%;
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.5);
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 100px auto 40px;
+      padding: 0 20px;
+      flex-grow: 1;
+      position: relative;
+      z-index: 10;
+    }
+
+    h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 50px;
+      color: #000000;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .service {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: #111;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+      color: #ddd;
+    }
+
+    .service h2 {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 1.4rem;
+      color: #ffcc00;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .service p {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    /* abas */
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Botão para mudar aba */
+    .btn-switch {
+      display: block;
+      margin: 20px auto 0 auto;
+      padding: 12px 30px;
+      background-color: #ffcc00;
+      color: #000;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: background-color 0.3s ease;
+      text-align: center;
+      user-select: none;
+    }
+    .btn-switch:hover {
+      background-color: #e6b800;
+    }
+
+    /* Rodapé */
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #0e0e0e;
+      color: #fff;
+      text-align: center;
+      font-size: 1rem;
+      padding: 10px 0;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      user-select: none;
+      z-index: 100;
+    }
+
+    footer img {
+      width: 24px;
+      height: auto;
+      vertical-align: middle;
+    }
+
+    /* RESPONSIVO */
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.3rem;
+        margin-bottom: 30px;
+      }
+      .service h2 {
+        font-size: 1.15rem;
+      }
+      .service p {
+        font-size: 0.95rem;
+      }
+      .btn-switch {
+        font-size: 1rem;
+        padding: 10px 24px;
+      }
+
+      /* Esconde menu padrão */
+      .nav-center {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: #0e0e0e;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        padding: 0;
+        z-index: 999;
+      }
+      /* Quando menu ativo */
+      .nav-center.active {
+        max-height: 500px; /* suficiente para mostrar todos os links */
+        padding: 15px 0;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+      }
+      .nav-center a {
+        font-size: 1.2rem;
+        padding: 10px 20px;
+        width: 100%;
+        text-align: center;
+      }
+
+      /* Mostra o hambúrguer */
+      .hamburger {
+        display: flex;
+      }
+
+      /* Ajusta logo */
+      nav img {
+        position: static;
+        max-height: 35px;
+      }
+    }
+
+    /* Hamburger animado ao abrir */
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(10px) rotate(45deg);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-10px) rotate(-45deg);
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <img src="Demolidora Renovo.png" alt="Logo Demolidora Renovo" />
+  <div class="nav-center" id="nav-links">
+    <a href="index.html#inicio">Início</a>
+    <a href="index.html#quem-somos">Quem Somos</a>
+    <a href="index.html#porque-escolher">Por que nos Escolher?</a>
+    <a href="index.html#contato">Contato</a>
+    <a id="tab-servicos" class="active" href="javascript:void(0)">Serviços Oferecidos</a>
+    <a id="tab-sustentaveis" href="javascript:void(0)">Sustentáveis e Complementares</a>
+  </div>
+
+  <div class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" role="button" tabindex="0">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</nav>
+
+<header>
+  <div class="slider" id="slider">
+    <div class="slide" style="background-image: url('pegada-de-pega-de-grua.jpg');"></div>
+    <div class="slide" style="background-image: url('imagem2.jpg');"></div>
+    <div class="slide" style="background-image: url('imagem3.jpg');"></div>
+  </div>
+</header>
+
+<main>
+  <!-- Aba 1: Serviços Oferecidos -->
+  <section id="servicos" class="tab-content active">
+    <h1>Serviços Oferecidos</h1>
+
+    <div class="service">
+      <h2>1. Demolição Total</h2>
+      <p>Remoção completa de edificações residenciais, comerciais ou industriais, deixando o terreno limpo e pronto para novas construções. Inclui planejamento, execução e limpeza pós-demolição com eliminação de entulhos e destinação ambientalmente correta.</p>
+    </div>
+
+    <div class="service">
+      <h2>2. Demolição Parcial ou Seletiva</h2>
+      <p>Remoção de partes específicas da estrutura (paredes, lajes, instalações), preservando elementos que podem ser reaproveitados e reduzindo custos e desperdícios.</p>
+    </div>
+
+    <div class="service">
+      <h2>3. Desmonte Técnico / Desmontagem de Componentes</h2>
+      <p>Remoção cuidadosa de estruturas metálicas, tubulações, escadas ou outros componentes para reuso posterior.</p>
+    </div>
+
+    <div class="service">
+      <h2>4. Demolição Manual</h2>
+      <p>Ideal para áreas delicadas ou restritas, usando ferramentas manuais e sem impacto significativo à estrutura existente.</p>
+    </div>
+
+    <div class="service">
+      <h2>5. Demolição Mecanizada</h2>
+      <p>Uso de máquinas como escavadeiras, guindastes e rompedores hidráulicos para obras de médio a grande porte. Especialmente eficaz para estruturas em concreto e metálicas.</p>
+    </div>
+
+    <div class="service">
+      <h2>6. Demolição de Alto Risco</h2>
+      <p>Execução em locais críticos — grandes alturas, áreas movimentadas ou de difícil acesso — com protocolos reforçados de segurança.</p>
+    </div>
+
+    <div class="service">
+      <h2>7. Demolição Silenciosa</h2>
+      <p>Para ambientes sensíveis ao ruído, como escolas, hospitais ou zonas urbanas densas, utilizando técnicas minimamente invasivas.</p>
+    </div>
+
+    <div class="service">
+      <h2>8. Demolição Contaminada</h2>
+      <p>Projetos envolvendo substâncias perigosas como amianto, chumbo ou resíduos químicos, com equipe certificada e descartes regulamentados.</p>
+    </div>
+
+    <button class="btn-switch" id="btn-ir-para-sustentaveis">Ver Serviços Sustentáveis e Complementares</button>
+  </section>
+
+  <!-- Aba 2: Serviços Sustentáveis e Complementares -->
+  <section id="sustentaveis" class="tab-content">
+    <h1>Serviços Sustentáveis e Complementares</h1>
+
+    <div class="service">
+      <h2>Gestão de Resíduos e Reciclagem</h2>
+      <p>Gerenciamento eficiente dos resíduos gerados, com foco na reciclagem e destinação ambientalmente correta, reduzindo impactos ao meio ambiente.</p>
+    </div>
+
+    <div class="service">
+      <h2>Britagem de Concreto</h2>
+      <p>Processo de fragmentação de concreto para reutilização como agregado em obras, promovendo sustentabilidade e economia.</p>
+    </div>
+
+    <div class="service">
+      <h2>Limpeza de Terreno</h2>
+      <p>Preparação e limpeza de terrenos para construção, remoção de entulhos, vegetação e materiais indesejados.</p>
+    </div>
+
+    <div class="service">
+      <h2>Retrofit</h2>
+      <p>Modernização e recuperação de edificações existentes para adequação às normas atuais, aumentando vida útil e eficiência.</p>
+    </div>
+
+    <div class="service">
+      <h2>Corte Diamantado</h2>
+      <p>Técnica precisa de corte em concreto e outros materiais com equipamentos diamantados, garantindo qualidade e menor impacto estrutural.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>Atendimento para todo o Brasil</span>
+  <img src="https://upload.wikimedia.org/wikipedia/en/0/05/Flag_of_Brazil.svg" alt="Bandeira do Brasil" />
+</footer>
+
+<script>
+  const tabServicos = document.getElementById('tab-servicos');
+  const tabSustentaveis = document.getElementById('tab-sustentaveis');
+  const servicosSection = document.getElementById('servicos');
+  const sustentaveisSection = document.getElementById('sustentaveis');
+  const btnIrParaSustentaveis = document.getElementById('btn-ir-para-sustentaveis');
+  const navLinks = document.getElementById('nav-links');
+  const hamburger = document.getElementById('hamburger');
+
+  function ativarAba(tabAtiva) {
+    if (tabAtiva === 'servicos') {
+      servicosSection.classList.add('active');
+      sustentaveisSection.classList.remove('active');
+      tabServicos.classList.add('active');
+      tabSustentaveis.classList.remove('active');
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    } else if (tabAtiva === 'sustentaveis') {
+      servicosSection.classList.remove('active');
+      sustentaveisSection.classList.add('active');
+      tabServicos.classList.remove('active');
+      tabSustentaveis.classList.add('active');
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    // Fechar menu mobile ao clicar na aba
+    if (window.innerWidth <= 768) {
+      navLinks.classList.remove('active');
+      hamburger.classList.remove('active');
+      hamburger.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  tabServicos.addEventListener('click', () => ativarAba('servicos'));
+  tabSustentaveis.addEventListener('click', () => ativarAba('sustentaveis'));
+  btnIrParaSustentaveis.addEventListener('click', () => ativarAba('sustentaveis'));
+
+  // Menu hamburger toggle
+  function toggleMenu() {
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+    hamburger.setAttribute('aria-expanded', String(!expanded));
+    hamburger.classList.toggle('active');
+    navLinks.classList.toggle('active');
+  }
+
+  hamburger.addEventListener('click', toggleMenu);
+  hamburger.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleMenu();
+    }
+  });
+
+  // Fecha menu se redimensionar para desktop
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+      navLinks.classList.remove('active');
+      hamburger.classList.remove('active');
+      hamburger.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Ativar aba certa ao carregar pela URL hash
+  function ativarAbaPeloHash() {
+    const hash = window.location.hash;
+    if (hash === '#sustentaveis') {
+      ativarAba('sustentaveis');
+    } else {
+      ativarAba('servicos');
+    }
+  }
+  window.addEventListener('load', ativarAbaPeloHash);
+
+  // Slider do header - troca de slides mais rápida (5s)
+  const slider = document.getElementById('slider');
+  const slidesCount = slider.children.length;
+  let currentIndex = 0;
+
+  setInterval(() => {
+    currentIndex = (currentIndex + 1) % slidesCount;
+    slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+  }, 5000); // troca a cada 5 segundos
+</script>
+
+</body>
+</html>
